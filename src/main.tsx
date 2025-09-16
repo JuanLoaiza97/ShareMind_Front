@@ -15,9 +15,10 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "./App";
-import './index.css'
+import "./index.css";
 import Login from "./pages/Login";
-import Register from "./pages/Register"; // 👈 importa la página de registro
+import Register from "./pages/Register"; 
+import Nosotros from "./pages/Nosotros"; // 👈 importa la página de Nosotros
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -30,7 +31,10 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <Route path="/login" element={<Login />} />
 
         {/* Ruta de Registro */}
-        <Route path="/registro" element={<Register />} /> {/* 👈 nueva ruta */}
+        <Route path="/registro" element={<Register />} /> 
+
+        {/* Ruta de Nosotros */}
+        <Route path="/nosotros" element={<Nosotros />} /> 
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

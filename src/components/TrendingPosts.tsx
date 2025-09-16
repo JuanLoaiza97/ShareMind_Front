@@ -134,7 +134,6 @@ const posts: Post[] = [
   },
 ];
 
-
 const TrendingPosts: React.FC = () => {
   return (
     <section className="bg-[#1E293B] text-[#F8FAFC] py-16">
@@ -147,7 +146,7 @@ const TrendingPosts: React.FC = () => {
           {posts.map((post) => (
             <div
               key={post.id}
-              className="bg-[#334155] rounded-xl p-6 shadow-lg hover:shadow-2xl transition-shadow"
+              className="bg-[#334155] rounded-xl p-6 shadow-lg hover:shadow-2xl transform hover:scale-105 transition duration-300 ease-in-out"
             >
               {/* Autor */}
               <div className="flex items-center gap-3 mb-4">

@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";
 
 interface Community {
   id: number;
@@ -56,19 +57,23 @@ const TopCommunities: React.FC = () => {
 
         <div className="grid md:grid-cols-3 gap-8">
           {communities.map((community) => (
-            <div
+            <motion.div
               key={community.id}
-              className="bg-[#334155] rounded-xl p-6 flex flex-col items-center shadow-lg hover:shadow-2xl transition-shadow"
+              whileHover={{ y: -8, scale: 1.02 }}
+              transition={{ type: "spring", stiffness: 200, damping: 12 }}
+              className="bg-[#334155] rounded-xl p-6 flex flex-col items-center shadow-lg cursor-pointer"
             >
               {/* Avatar */}
               <img
                 src={community.avatar}
                 alt={community.name}
-                className="h-16 w-16 rounded-full mb-4"
+                className="h-16 w-16 rounded-full mb-4 border-2 border-[#22D3EE]"
               />
 
               {/* Nombre */}
-              <h3 className="text-lg font-semibold">{community.name}</h3>
+              <h3 className="text-lg font-semibold text-center">
+                {community.name}
+              </h3>
 
               {/* Miembros */}
               <p className="text-[#94A3B8] text-sm mb-4">
@@ -79,7 +84,7 @@ const TopCommunities: React.FC = () => {
               <button className="px-4 py-2 rounded-lg bg-[#22D3EE] text-[#1E293B] font-medium hover:bg-[#34D399] transition-colors">
                 Unirse
               </button>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

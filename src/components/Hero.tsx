@@ -1,9 +1,8 @@
 import React from "react";
 
-
 const Hero: React.FC = () => {
   return (
-    <section className="bg-[#1E293B] text-[#F8FAFC]">
+    <section className="bg-gradient-to-b from-black to-[#1E293B] text-[#F8FAFC]">
       <div className="max-w-7xl mx-auto px-6 py-16 grid md:grid-cols-2 gap-12 items-center">
         
         {/* Lado Izquierdo */}
@@ -24,7 +23,7 @@ const Hero: React.FC = () => {
               Comenzar ahora
             </a>
             <a
-              href="#"
+              href="/nosotros"
               className="px-6 py-3 rounded-lg border border-[#334155] text-[#F8FAFC] hover:border-[#22D3EE] hover:text-[#22D3EE] transition-colors"
             >
               Más información

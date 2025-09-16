@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Register: React.FC = () => {
   const [interests, setInterests] = useState<string[]>([]);
@@ -22,7 +23,7 @@ const Register: React.FC = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#0F172A] px-4">
-      <div className="w-full max-w-2xl bg-[#1E293B] text-[#F8FAFC] rounded-2xl shadow-lg p-8">
+      <div className="w-full max-w-2xl bg-[#1E293B] text-[#F8FAFC] rounded-2xl shadow-lg p-8 my-10">
         <h2 className="text-3xl font-bold text-center mb-6">Crear cuenta</h2>
 
         <form className="space-y-5">
@@ -76,27 +77,33 @@ const Register: React.FC = () => {
 
           {/* Idiomas */}
           <div>
-            <p className="text-sm mb-2">Idiomas que hablas:</p>
+            <p className="text-sm mb-3 font-medium">Idiomas que hablas:</p>
             <div className="flex flex-wrap gap-3">
               {["Español", "Inglés", "Francés", "Alemán", "Portugués"].map(
-                (lang) => (
-                  <label key={lang} className="flex items-center gap-2">
-                    <input
-                      type="checkbox"
-                      checked={languages.includes(lang)}
-                      onChange={() => handleLanguageChange(lang)}
-                      className="h-4 w-4 text-[#22D3EE] rounded"
-                    />
-                    {lang}
-                  </label>
-                )
+                (lang) => {
+                  const selected = languages.includes(lang);
+                  return (
+                    <button
+                      type="button"
+                      key={lang}
+                      onClick={() => handleLanguageChange(lang)}
+                      className={`px-4 py-2 rounded-full text-sm font-medium transition-colors shadow-md ${
+                        selected
+                          ? "bg-[#22D3EE] text-[#1E293B]"
+                          : "bg-[#0F172A] text-[#94A3B8] border border-[#334155] hover:bg-[#1E293B] hover:text-[#F8FAFC]"
+                      }`}
+                    >
+                      {lang}
+                    </button>
+                  );
+                }
               )}
             </div>
           </div>
 
           {/* Intereses */}
           <div>
-            <p className="text-sm mb-2">Selecciona tus intereses:</p>
+            <p className="text-sm mb-3 font-medium">Selecciona tus intereses:</p>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
               {[
                 "Tecnología",
@@ -107,17 +114,23 @@ const Register: React.FC = () => {
                 "Historia",
                 "Idiomas",
                 "Literatura",
-              ].map((interest) => (
-                <label key={interest} className="flex items-center gap-2">
-                  <input
-                    type="checkbox"
-                    checked={interests.includes(interest)}
-                    onChange={() => handleInterestChange(interest)}
-                    className="h-4 w-4 text-[#34D399] rounded"
-                  />
-                  {interest}
-                </label>
-              ))}
+              ].map((interest) => {
+                const selected = interests.includes(interest);
+                return (
+                  <button
+                    type="button"
+                    key={interest}
+                    onClick={() => handleInterestChange(interest)}
+                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-sm ${
+                      selected
+                        ? "bg-[#34D399] text-[#1E293B]"
+                        : "bg-[#0F172A] text-[#94A3B8] border border-[#334155] hover:bg-[#1E293B] hover:text-[#F8FAFC]"
+                    }`}
+                  >
+                    {interest}
+                  </button>
+                );
+              })}
             </div>
           </div>
 
@@ -128,20 +141,28 @@ const Register: React.FC = () => {
             rows={4}
           />
 
-          {/* Botón */}
+          {/* Botón Registrarse */}
           <button
             type="submit"
             className="w-full py-3 rounded-lg bg-[#34D399] text-[#1E293B] font-semibold hover:bg-[#22D3EE] transition-colors text-lg"
           >
             Registrarse
           </button>
+
+          {/* Botón Regresar */}
+          <Link
+            to="/"
+            className="block w-full text-center py-3 rounded-lg bg-[#334155] text-[#F8FAFC] font-medium hover:bg-[#22D3EE] hover:text-[#1E293B] transition-colors text-lg"
+          >
+            Regresar al inicio
+          </Link>
         </form>
 
-        <p className="text-center text-sm mt-4">
+        <p className="text-center text-sm mt-6">
           ¿Ya tienes cuenta?{" "}
-          <a href="/login" className="text-[#22D3EE] hover:underline">
+          <Link to="/login" className="text-[#22D3EE] hover:underline">
             Inicia sesión aquí
-          </a>
+          </Link>
         </p>
       </div>
     </div>
