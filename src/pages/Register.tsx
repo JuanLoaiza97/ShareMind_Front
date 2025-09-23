@@ -1,10 +1,30 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Register: React.FC = () => {
+  const [formData, setFormData] = useState({
+    fullName: "",
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    country: "",
+    bio: "",
+  });
+
   const [interests, setInterests] = useState<string[]>([]);
   const [languages, setLanguages] = useState<string[]>([]);
+  const navigate = useNavigate();
 
+  // Manejar cambios en inputs de texto
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  // Manejar selección de intereses
   const handleInterestChange = (interest: string) => {
     setInterests((prev) =>
       prev.includes(interest)
@@ -13,12 +33,50 @@ const Register: React.FC = () => {
     );
   };
 
+  // Manejar selección de idiomas
   const handleLanguageChange = (lang: string) => {
     setLanguages((prev) =>
-      prev.includes(lang)
-        ? prev.filter((l) => l !== lang)
-        : [...prev, lang]
+      prev.includes(lang) ? prev.filter((l) => l !== lang) : [...prev, lang]
     );
+  };
+
+  // Enviar datos al backend
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (formData.password !== formData.confirmPassword) {
+      alert("Las contraseñas no coinciden");
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:4000/users/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          fullName: formData.fullName,
+          username: formData.username,
+          email: formData.email,
+          password: formData.password,
+          country: formData.country,
+          bio: formData.bio,
+          interests,
+          languages,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Error en el registro");
+      }
+
+      alert("Usuario registrado con éxito 🎉");
+      navigate("/login");
+    } catch (error) {
+      console.error(error);
+      alert("Hubo un problema al registrar el usuario");
+    }
   };
 
   return (
@@ -26,11 +84,14 @@ const Register: React.FC = () => {
       <div className="w-full max-w-2xl bg-[#1E293B] text-[#F8FAFC] rounded-2xl shadow-lg p-8 my-10">
         <h2 className="text-3xl font-bold text-center mb-6">Crear cuenta</h2>
 
-        <form className="space-y-5">
+        <form className="space-y-5" onSubmit={handleSubmit}>
           {/* Nombre completo */}
           <input
             type="text"
+            name="fullName"
             placeholder="Nombre completo"
+            value={formData.fullName}
+            onChange={handleChange}
             className="w-full px-4 py-3 rounded-lg bg-[#0F172A] border border-gray-600 focus:border-[#22D3EE] focus:ring-2 focus:ring-[#22D3EE] outline-none"
             required
           />
@@ -38,7 +99,10 @@ const Register: React.FC = () => {
           {/* Nombre de usuario */}
           <input
             type="text"
+            name="username"
             placeholder="Nombre de usuario"
+            value={formData.username}
+            onChange={handleChange}
             className="w-full px-4 py-3 rounded-lg bg-[#0F172A] border border-gray-600 focus:border-[#22D3EE] focus:ring-2 focus:ring-[#22D3EE] outline-none"
             required
           />
@@ -46,7 +110,10 @@ const Register: React.FC = () => {
           {/* Correo */}
           <input
             type="email"
+            name="email"
             placeholder="Correo electrónico"
+            value={formData.email}
+            onChange={handleChange}
             className="w-full px-4 py-3 rounded-lg bg-[#0F172A] border border-gray-600 focus:border-[#22D3EE] focus:ring-2 focus:ring-[#22D3EE] outline-none"
             required
           />
@@ -55,13 +122,19 @@ const Register: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <input
               type="password"
+              name="password"
               placeholder="Contraseña"
+              value={formData.password}
+              onChange={handleChange}
               className="w-full px-4 py-3 rounded-lg bg-[#0F172A] border border-gray-600 focus:border-[#22D3EE] focus:ring-2 focus:ring-[#22D3EE] outline-none"
               required
             />
             <input
               type="password"
+              name="confirmPassword"
               placeholder="Confirmar contraseña"
+              value={formData.confirmPassword}
+              onChange={handleChange}
               className="w-full px-4 py-3 rounded-lg bg-[#0F172A] border border-gray-600 focus:border-[#22D3EE] focus:ring-2 focus:ring-[#22D3EE] outline-none"
               required
             />
@@ -70,7 +143,10 @@ const Register: React.FC = () => {
           {/* País */}
           <input
             type="text"
+            name="country"
             placeholder="Ciudad / País"
+            value={formData.country}
+            onChange={handleChange}
             className="w-full px-4 py-3 rounded-lg bg-[#0F172A] border border-gray-600 focus:border-[#22D3EE] focus:ring-2 focus:ring-[#22D3EE] outline-none"
             required
           />
@@ -136,7 +212,10 @@ const Register: React.FC = () => {
 
           {/* Biografía */}
           <textarea
+            name="bio"
             placeholder="Escribe una breve biografía..."
+            value={formData.bio}
+            onChange={handleChange}
             className="w-full px-4 py-3 rounded-lg bg-[#0F172A] border border-gray-600 focus:border-[#22D3EE] focus:ring-2 focus:ring-[#22D3EE] outline-none"
             rows={4}
           />
