@@ -30,7 +30,7 @@ const suggestedUsers: SuggestedUser[] = [
 
 const RightSidebar: React.FC = () => {
   return (
-    <aside className="w-72 bg-[#1E293B] text-[#F8FAFC] p-6 rounded-xl shadow-lg h-fit">
+    <aside className="w-72 bg-[#1E293B] text-[#F8FAFC] p-6 rounded-xl shadow-lg mt-8 h-fit">
       <h3 className="text-lg font-bold mb-4">Sugerencias para ti</h3>
 
       <div className="space-y-4">

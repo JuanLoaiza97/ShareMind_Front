@@ -11,7 +11,7 @@ export default function ProfileHome() {
       <Sidebar />
 
       {/* Muro */}
-      <div className="flex-1 p-8">
+    <div className="flex-1 max-w-[962px] p-8">
         {/* Botón Realizar Post */}
         <Link
           to="/newpost"

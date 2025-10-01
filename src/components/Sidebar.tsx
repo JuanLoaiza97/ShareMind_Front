@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import {
   HomeIcon,
   GlobeAltIcon,
+  MagnifyingGlassIcon,
   ChatBubbleOvalLeftEllipsisIcon,
   BellIcon,
   UserCircleIcon,
@@ -36,6 +37,14 @@ const Sidebar: React.FC = () => {
         >
           <GlobeAltIcon className="h-6 w-6 text-[#22D3EE]" />
           Explorar
+        </Link>
+
+        <Link
+          to="/search"
+          className="flex items-center gap-3 p-3 rounded-lg hover:bg-[#0F172A] transition-colors"
+        >
+          <MagnifyingGlassIcon className="h-6 w-6 text-[#22D3EE]" />
+          Buscar
         </Link>
 
         <Link
