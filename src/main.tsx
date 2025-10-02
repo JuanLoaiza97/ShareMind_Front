@@ -24,6 +24,8 @@ import Profile from "./pages/Profile";
 import PostPage from "./pages/PostPage";
 import NewPost from "./pages/NewPost"; 
 import Explore from "./pages/Explore"; 
+import Settings from "./pages/Settings";
+
 
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
@@ -56,6 +58,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
 
         {/* Ruta para crear explorar */}
         <Route path="/explore" element={<Explore />} />
+
+        <Route path="/settings" element={<Settings />} />
+
 
 
       </Routes>

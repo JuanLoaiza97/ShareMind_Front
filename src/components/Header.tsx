@@ -14,7 +14,7 @@ const Header = () => {
           <Link to="/" className="hover:text-[#34D399] transition-colors">
             Inicio
           </Link>
-          <Link to="/explorar" className="hover:text-[#34D399] transition-colors">
+          <Link to="/Explore" className="hover:text-[#34D399] transition-colors">
             Explorar
           </Link>
           <Link

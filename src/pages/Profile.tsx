@@ -109,9 +109,10 @@ const Profile = () => {
 
             {/* Botones de acción */}
             <div className="flex gap-3">
-              <button className="px-6 py-3 rounded-xl bg-gradient-to-r from-[#34D399] to-[#22D3EE] text-[#0F172A] font-bold hover:shadow-lg hover:shadow-emerald-500/50 hover:scale-105 transition-all duration-300">
+              <button className="px-6 py-3 rounded-xl bg-[#34D399] text-[rgb(32,38,52)] font-bold hover:bg-[#475569] transition-colors duration-300">
                 Editar perfil
               </button>
+
               <button className="px-6 py-3 rounded-xl bg-[#334155] text-white font-semibold hover:bg-[#475569] transition-all duration-300">
                 Compartir
               </button>
