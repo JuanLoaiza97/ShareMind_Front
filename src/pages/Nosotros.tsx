@@ -74,6 +74,18 @@ const Nosotros: React.FC = () => {
             </p>
             <span className="block mt-4 font-semibold text-[#FBBF24]">— Carlos M.</span>
           </div>
+          <div className="bg-[#1E293B] p-6 rounded-2xl shadow-lg border border-[#FBBF24]/30">
+            <p className="italic text-gray-300">
+              “Que chimba de app, todo muy fluido todo muy melo, casi que no cierro sesion, pero se entiende.”
+            </p>
+            <span className="block mt-4 font-semibold text-[#FBBF24]">— Juliana L.</span>
+          </div>
+          <div className="bg-[#1E293B] p-6 rounded-2xl shadow-lg border border-[#FBBF24]/30">
+            <p className="italic text-gray-300">
+              “Gracias a esta red social termine mi tesis en gerencia de pollos nacionalizados, gracias y mi tesis en manofactura en arepas delgaditas.”
+            </p>
+            <span className="block mt-4 font-semibold text-[#FBBF24]">— Yurleidy P.</span>
+          </div>
         </div>
 
         {/* CTA */}

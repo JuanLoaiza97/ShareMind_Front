@@ -51,6 +51,24 @@ export default function NewPost() {
             />
           </div>
 
+          <div>
+            <label className="block text-gray-300 mb-2">Multimedia</label>
+            <input
+              type="file"
+              accept="image/*"
+              className="w-full px-3 py-2 rounded bg-gray-700 text-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500"
+            />
+          </div>
+
+          <div>
+            <label className="block text-gray-300 mb-2">Archivos</label>
+            <input
+              type="file"
+              accept="file/*"
+              className="w-full px-3 py-2 rounded bg-gray-700 text-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500"
+            />
+          </div>
+
           {/* Contenido del artículo */}
           <div>
             <label className="block text-gray-300 mb-2">Contenido</label>

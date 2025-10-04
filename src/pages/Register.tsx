@@ -3,7 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 
 const Register: React.FC = () => {
   const [formData, setFormData] = useState({
-    fullName: "",
+    firstName: "",
+    lastName: "",
     username: "",
     email: "",
     password: "",
@@ -14,14 +15,44 @@ const Register: React.FC = () => {
 
   const [interests, setInterests] = useState<string[]>([]);
   const [languages, setLanguages] = useState<string[]>([]);
+  const [suggestions, setSuggestions] = useState<string[]>([]);
+
   const navigate = useNavigate();
 
-  // Manejar cambios en inputs de texto
+  // Lista de ciudades/países (ejemplo básico, puedes integrar API externa luego)
+  const cities = [
+    "Medellín, Colombia",
+    "Bogotá, Colombia",
+    "Cali, Colombia",
+    "Buenos Aires, Argentina",
+    "Ciudad de México, México",
+    "Madrid, España",
+    "Barcelona, España",
+    "París, Francia",
+    "Berlín, Alemania",
+    "Lisboa, Portugal",
+    "Nueva York, USA",
+    "Los Ángeles, USA",
+  ];
+
+  // Manejar cambios en inputs
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+
+    if (name === "country") {
+      if (value.length > 1) {
+        setSuggestions(
+          cities.filter((city) =>
+            city.toLowerCase().includes(value.toLowerCase())
+          )
+        );
+      } else {
+        setSuggestions([]);
+      }
+    }
   };
 
   // Manejar selección de intereses
@@ -40,6 +71,12 @@ const Register: React.FC = () => {
     );
   };
 
+  // Selección de sugerencia en autocompletar
+  const handleSelectSuggestion = (city: string) => {
+    setFormData((prev) => ({ ...prev, country: city }));
+    setSuggestions([]);
+  };
+
   // Enviar datos al backend
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -56,7 +93,8 @@ const Register: React.FC = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          fullName: formData.fullName,
+          firstName: formData.firstName,
+          lastName: formData.lastName,
           username: formData.username,
           email: formData.email,
           password: formData.password,
@@ -85,16 +123,27 @@ const Register: React.FC = () => {
         <h2 className="text-3xl font-bold text-center mb-6">Crear cuenta</h2>
 
         <form className="space-y-5" onSubmit={handleSubmit}>
-          {/* Nombre completo */}
-          <input
-            type="text"
-            name="fullName"
-            placeholder="Nombre completo"
-            value={formData.fullName}
-            onChange={handleChange}
-            className="w-full px-4 py-3 rounded-lg bg-[#0F172A] border border-gray-600 focus:border-[#22D3EE] focus:ring-2 focus:ring-[#22D3EE] outline-none"
-            required
-          />
+          {/* Nombres y Apellidos */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <input
+              type="text"
+              name="firstName"
+              placeholder="Nombres"
+              value={formData.firstName}
+              onChange={handleChange}
+              className="w-full px-4 py-3 rounded-lg bg-[#0F172A] border border-gray-600 focus:border-[#22D3EE] focus:ring-2 focus:ring-[#22D3EE] outline-none"
+              required
+            />
+            <input
+              type="text"
+              name="lastName"
+              placeholder="Apellidos"
+              value={formData.lastName}
+              onChange={handleChange}
+              className="w-full px-4 py-3 rounded-lg bg-[#0F172A] border border-gray-600 focus:border-[#22D3EE] focus:ring-2 focus:ring-[#22D3EE] outline-none"
+              required
+            />
+          </div>
 
           {/* Nombre de usuario */}
           <input
@@ -140,40 +189,63 @@ const Register: React.FC = () => {
             />
           </div>
 
-          {/* País */}
-          <input
-            type="text"
-            name="country"
-            placeholder="Ciudad / País"
-            value={formData.country}
-            onChange={handleChange}
-            className="w-full px-4 py-3 rounded-lg bg-[#0F172A] border border-gray-600 focus:border-[#22D3EE] focus:ring-2 focus:ring-[#22D3EE] outline-none"
-            required
-          />
+          {/* Ciudad / País con autocompletar */}
+          <div className="relative">
+            <input
+              type="text"
+              name="country"
+              placeholder="Ciudad / País"
+              value={formData.country}
+              onChange={handleChange}
+              className="w-full px-4 py-3 rounded-lg bg-[#0F172A] border border-gray-600 focus:border-[#22D3EE] focus:ring-2 focus:ring-[#22D3EE] outline-none"
+              required
+            />
+            {suggestions.length > 0 && (
+              <ul className="absolute bg-[#1E293B] border border-gray-600 rounded-lg mt-1 w-full max-h-40 overflow-y-auto z-10">
+                {suggestions.map((city, index) => (
+                  <li
+                    key={index}
+                    onClick={() => handleSelectSuggestion(city)}
+                    className="px-4 py-2 cursor-pointer hover:bg-[#22D3EE] hover:text-[#1E293B]"
+                  >
+                    {city}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
 
           {/* Idiomas */}
           <div>
             <p className="text-sm mb-3 font-medium">Idiomas que hablas:</p>
             <div className="flex flex-wrap gap-3">
-              {["Español", "Inglés", "Francés", "Alemán", "Portugués"].map(
-                (lang) => {
-                  const selected = languages.includes(lang);
-                  return (
-                    <button
-                      type="button"
-                      key={lang}
-                      onClick={() => handleLanguageChange(lang)}
-                      className={`px-4 py-2 rounded-full text-sm font-medium transition-colors shadow-md ${
-                        selected
-                          ? "bg-[#22D3EE] text-[#1E293B]"
-                          : "bg-[#0F172A] text-[#94A3B8] border border-[#334155] hover:bg-[#1E293B] hover:text-[#F8FAFC]"
-                      }`}
-                    >
-                      {lang}
-                    </button>
-                  );
-                }
-              )}
+              {[
+                "Español",
+                "Inglés",
+                "Francés",
+                "Alemán",
+                "Portugués",
+                "Italiano",
+                "Chino",
+                "Japonés",
+                "Coreano",
+              ].map((lang) => {
+                const selected = languages.includes(lang);
+                return (
+                  <button
+                    type="button"
+                    key={lang}
+                    onClick={() => handleLanguageChange(lang)}
+                    className={`px-4 py-2 rounded-full text-sm font-medium transition-colors shadow-md ${
+                      selected
+                        ? "bg-[#22D3EE] text-[#1E293B]"
+                        : "bg-[#0F172A] text-[#94A3B8] border border-[#334155] hover:bg-[#1E293B] hover:text-[#F8FAFC]"
+                    }`}
+                  >
+                    {lang}
+                  </button>
+                );
+              })}
             </div>
           </div>
 
@@ -190,6 +262,10 @@ const Register: React.FC = () => {
                 "Historia",
                 "Idiomas",
                 "Literatura",
+                "Deportes",
+                "Música",
+                "Cine",
+                "Viajes",
               ].map((interest) => {
                 const selected = interests.includes(interest);
                 return (
