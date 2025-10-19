@@ -1,23 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Sidebar from "../components/Sidebar";
 
-const user = {
-  name: "liliana",
-  username: "@lili3dev",
-  bio: "💻 Programadora | 🎨 Creativa | 📚 Amante del aprendizaje colaborativo",
-  avatar: "https://i.pravatar.cc/150?img=45",
-  banner: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&h=400&fit=crop&q=80",
-  interests: [
-    { tag: "#Programación", icon: "💻" },
-    { tag: "#Arte", icon: "🎨" },
-    { tag: "#Psicología", icon: "🧠" },
-  ],
-  stats: {
-    posts: 12,  
-    followers: 340,
-    following: 180,
-  },
-  badges: ["🔥 Colaboradora del mes", "⭐ Top 10 en apuntes"],
-};
 
 const boards = [
   {
@@ -53,12 +37,33 @@ const boards = [
 ];
 
 const Profile = () => {
+  const [user, setUser] = useState<any>(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    } else {
+      navigate("/login"); // Redirige al login si no hay usuario logueado
+    }
+  }, [navigate]);
+
+  if (!user) return <p className="text-white p-6">Cargando usuario...</p>;
+  const firstName = user.firstName || user.username;
+
+
+
+
   return (
-    <div className="bg-gradient-to-b from-[#0F172A] via-[#1E293B] to-[#0F172A] min-h-screen">
+    <div className="flex min-h-screen">
+      {/* Sidebar */}
+      <Sidebar />
+      <div className="ml-60 w-full bg-gradient-to-b from-[#0A0F1E] via-[#1E293B] to-[#0F172A] min-h-screen">
       {/* Banner con overlay */}
       <div className="relative h-64 overflow-hidden">
         <img 
-          src={user.banner} 
+          src={user.banner || "/img/banner.jfif"} 
           alt="Banner" 
           className="w-full h-full object-cover"
         />
@@ -72,8 +77,8 @@ const Profile = () => {
           {/* Avatar */}
           <div className="relative group">
             <img
-              src={user.avatar}
-              alt={user.name}
+              src={user.avatar || "/img/avatar_us.png"}
+              alt={firstName}
               className="relative w-40 h-40 rounded-2xl border-4 border-[#1E293B] shadow-2xl object-cover"
             />
           </div>
@@ -82,7 +87,7 @@ const Profile = () => {
           <div className="flex-1 text-white pt-4">
             <div className="flex items-center gap-4 mb-2">
               <h1 className="text-4xl font-bold text-[#34D399]">
-                {user.name}
+                {firstName}
               </h1>
               <span className="px-3 py-1 bg-[#34D399]/20 text-[#34D399] rounded-full text-sm font-medium">
                 Pro
@@ -94,15 +99,15 @@ const Profile = () => {
             {/* Stats inline */}
             <div className="flex gap-8 mb-6">
               <div>
-                <span className="text-2xl font-bold text-white">{user.stats.posts}</span>
+                <span className="text-2xl font-bold text-white">{user.stats?.posts || 0}</span>
                 <span className="text-[#94A3B8] ml-2">Publicaciones</span>
               </div>
               <div>
-                <span className="text-2xl font-bold text-white">{user.stats.followers}</span>
+                <span className="text-2xl font-bold text-white">{user.stats?.followers || 0 }</span>
                 <span className="text-[#94A3B8] ml-2">Seguidores</span>
               </div>
               <div>
-                <span className="text-2xl font-bold text-white">{user.stats.following}</span>
+                <span className="text-2xl font-bold text-white">{user.stats?.following || 0}</span>
                 <span className="text-[#94A3B8] ml-2">Siguiendo</span>
               </div>
             </div>
@@ -119,13 +124,13 @@ const Profile = () => {
           </div>
         </div>
 
-        {/* Insignias destacadas */}
+        {/* Insignias */}
         <div className="bg-[#1E293B]/80 rounded-2xl p-6 mb-8 border border-[#334155]">
           <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
             <span className="text-2xl">🏆</span> Insignias
           </h2>
           <div className="flex gap-3 flex-wrap">
-            {user.badges.map((badge, idx) => (
+            {user.badges?.map((badge: string, idx: number) => (
               <span
                 key={idx}
                 className="px-5 py-3 bg-gradient-to-r from-[#34D399]/20 to-[#22D3EE]/20 border border-[#34D399]/30 text-[#34D399] rounded-xl font-semibold hover:scale-105 transition-all duration-300 cursor-pointer"
@@ -140,12 +145,13 @@ const Profile = () => {
         <div className="bg-[#1E293B]/80 rounded-2xl p-6 mb-8 border border-[#334155]">
           <h2 className="text-xl font-bold text-white mb-4">Intereses</h2>
           <div className="flex gap-3 flex-wrap">
-            {user.interests.map((item) => (
+
+            {user.interests?.map((interest: string, idx: number) => (
               <span
-                key={item.tag}
+                key={idx}
                 className="px-5 py-2.5 bg-[#334155] rounded-full text-[#CBD5E1] flex items-center gap-2 hover:bg-[#34D399] hover:text-[#0F172A] transition-all duration-300 cursor-pointer font-medium"
               >
-                <span className="text-lg">{item.icon}</span> {item.tag}
+                 {interest}
               </span>
             ))}
           </div>
@@ -202,6 +208,9 @@ const Profile = () => {
         </div>
       </div>
     </div>
+    </div>
+
+    
   );
 };
 

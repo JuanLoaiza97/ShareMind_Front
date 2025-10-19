@@ -1,5 +1,13 @@
 import React from "react";
-import { MagnifyingGlassIcon, FireIcon, UserGroupIcon, SparklesIcon, UsersIcon } from "@heroicons/react/24/outline";
+import { Link } from "react-router-dom";
+import Sidebar from "../components/Sidebar";
+import {
+  MagnifyingGlassIcon,
+  FireIcon,
+  UserGroupIcon,
+  SparklesIcon,
+  UsersIcon,
+} from "@heroicons/react/24/outline";
 
 const Explore = () => {
   const communities = [
@@ -69,7 +77,6 @@ const Explore = () => {
       author: "María Dev",
       likes: 234
     },
-   
   ];
 
   return (
@@ -82,7 +89,7 @@ const Explore = () => {
         </div>
 
         {/* Barra de búsqueda */}
-        <div className="flex items-center bg-[#1E293B] border border-[#334155] rounded-xl p-4 mb-8 shadow-lg hover:border-[#34D399]/50 transition">
+        <div className="flex items-center bg-[#0F172A] border border-[#334155] rounded-xl p-4 mb-10 hover:border-[#34D399]/50 transition-all duration-300">
           <MagnifyingGlassIcon className="h-6 w-6 text-[#34D399]" />
           <input
             type="text"
@@ -91,55 +98,59 @@ const Explore = () => {
           />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Columna principal - Comunidades */}
-          <div className="lg:col-span-2">
-            <section className="mb-8">
-              <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          {/* Columna principal - Comunidades y Posts */}
+          <div className="lg:col-span-3 space-y-10">
+            {/* Comunidades Destacadas */}
+            <section>
+              <h2 className="text-2xl font-bold mb-6 flex items-center gap-3">
                 <UserGroupIcon className="h-7 w-7 text-[#34D399]" />
                 Comunidades Destacadas
               </h2>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 {communities.map((community) => (
-                  <div
-                    key={community.id}
-                    className="bg-[#1E293B]/80 rounded-xl overflow-hidden border border-[#334155] hover:border-[#34D399]/50 transition-all duration-300 cursor-pointer group"
-                  >
-                    <div className="relative h-32 overflow-hidden">
-                      <img
-                        src={community.image}
-                        alt={community.name}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#1E293B] to-transparent"></div>
-                      <span className="absolute top-3 right-3 px-3 py-1 bg-[#334155]/90 rounded-full text-xs font-medium">
-                        {community.category}
-                      </span>
-                    </div>
-                    <div className="p-4">
-                      <h3 className="font-bold text-lg mb-1 text-white group-hover:text-[#34D399] transition">
-                        {community.name}
-                      </h3>
-                      <p className="text-sm text-[#94A3B8] mb-3">{community.description}</p>
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-1 text-[#64748B]">
-                          <UsersIcon className="h-4 w-4" />
-                          <span className="text-sm">{community.members} miembros</span>
+                  <Link to="/community" key={community.id}>
+                    <div className="bg-[#0F172A] rounded-2xl overflow-hidden border border-[#334155] hover:border-[#34D399]/50 transition-all duration-300 cursor-pointer group">
+                      <div className="relative h-36 overflow-hidden">
+                        <img
+                          src={community.image}
+                          alt={community.name}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#0F172A] via-[#0F172A]/50 to-transparent"></div>
+                        <span className="absolute top-3 right-3 px-3 py-1 bg-[#334155]/90 rounded-full text-xs font-medium backdrop-blur-sm">
+                          {community.category}
+                        </span>
+                      </div>
+                      <div className="p-5">
+                        <h3 className="font-bold text-xl mb-2 text-white group-hover:text-[#34D399] transition">
+                          {community.name}
+                        </h3>
+                        <p className="text-sm text-[#94A3B8] mb-4 leading-relaxed">
+                          {community.description}
+                        </p>
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2 text-[#64748B]">
+                            <UsersIcon className="h-5 w-5" />
+                            <span className="text-sm font-medium">
+                              {community.members} miembros
+                            </span>
+                          </div>
+                          <button className="px-5 py-2 bg-[#34D399] text-[#0F172A] rounded-lg text-sm font-bold hover:bg-[#2ec589] hover:scale-105 transition-all duration-300">
+                            Unirse
+                          </button>
                         </div>
-                        <button className="px-4 py-1.5 bg-[#34D399] text-[#0F172A] rounded-lg text-sm font-semibold hover:bg-[#2ec589] transition">
-                          Unirse
-                        </button>
                       </div>
                     </div>
-                  </div>
+                  </Link>
                 ))}
               </div>
             </section>
 
-            {/* Posts recomendados */}
+            {/* Posts Recomendados */}
             <section>
-              <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
+              <h2 className="text-2xl font-bold mb-6 flex items-center gap-3">
                 <SparklesIcon className="h-7 w-7 text-[#34D399]" />
                 Posts Recomendados
               </h2>
@@ -147,15 +158,17 @@ const Explore = () => {
                 {recommendedPosts.map((post) => (
                   <article
                     key={post.id}
-                    className="bg-[#1E293B]/80 p-5 rounded-xl border border-[#334155] hover:border-[#34D399]/50 transition-all duration-300 cursor-pointer"
+                    className="bg-[#0F172A] p-6 rounded-2xl border border-[#334155] hover:border-[#34D399]/50 transition-all duration-300 cursor-pointer group"
                   >
-                    <h3 className="font-semibold text-lg mb-2 hover:text-[#34D399] transition">
+                    <h3 className="font-bold text-xl mb-3 group-hover:text-[#34D399] transition">
                       {post.title}
                     </h3>
-                    <p className="text-sm text-[#94A3B8] mb-3">{post.description}</p>
-                    <div className="flex items-center justify-between text-sm text-[#64748B]">
-                      <span>Por {post.author}</span>
-                      <span>❤️ {post.likes}</span>
+                    <p className="text-sm text-[#94A3B8] mb-4 leading-relaxed">
+                      {post.description}
+                    </p>
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-[#64748B]">Por <span className="text-[#94A3B8] font-medium">{post.author}</span></span>
+                      <span className="text-[#64748B]">❤️ {post.likes}</span>
                     </div>
                   </article>
                 ))}
@@ -163,9 +176,9 @@ const Explore = () => {
             </section>
           </div>
 
-          {/* Sidebar derecho - Tendencias */}
+          {/* Sidebar - Tendencias */}
           <div className="lg:col-span-1">
-            <section className="bg-[#1E293B]/80 rounded-xl p-6 border border-[#334155] sticky top-6">
+            <div className="bg-[#0F172A] rounded-2xl p-6 border border-[#334155] sticky top-6">
               <h2 className="text-xl font-bold mb-5 flex items-center gap-2">
                 <FireIcon className="h-6 w-6 text-[#F87171]" />
                 Tendencias
@@ -174,14 +187,16 @@ const Explore = () => {
                 {trending.map((item, idx) => (
                   <li
                     key={idx}
-                    className="hover:text-[#34D399] cursor-pointer transition pb-3 border-b border-[#334155] last:border-0"
+                    className="cursor-pointer transition pb-4 border-b border-[#334155] last:border-0 hover:scale-105 duration-300"
                   >
-                    <div className="font-semibold">{item.tag}</div>
+                    <div className="font-bold text-white hover:text-[#34D399] transition">
+                      {item.tag}
+                    </div>
                     <div className="text-sm text-[#64748B] mt-1">{item.posts}</div>
                   </li>
                 ))}
               </ul>
-            </section>
+            </div>
           </div>
         </div>
       </div>

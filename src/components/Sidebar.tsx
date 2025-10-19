@@ -12,7 +12,8 @@ import {
 
 const Sidebar: React.FC = () => {
   return (
-    <aside className="h-screen w-64 bg-[#1E293B] text-[#F8FAFC] flex flex-col shadow-lg">
+    
+    <aside className="fixed top-0 left-0 h-screen w-60 bg-[#1E293B] text-[#F8FAFC] flex flex-col shadow-lg">
       {/* Logo */}
       <div className="flex items-center justify-center h-20 border-b border-gray-700">
         <h1 className="text-2xl font-bold">

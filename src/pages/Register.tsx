@@ -3,7 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 
 const Register: React.FC = () => {
   const [formData, setFormData] = useState({
-    fullName: "",
+    firstName: "",
+    lastName: "",
     username: "",
     email: "",
     password: "",
@@ -56,7 +57,8 @@ const Register: React.FC = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          fullName: formData.fullName,
+          firstName: formData.firstName,
+          lastName: formData.lastName,
           username: formData.username,
           email: formData.email,
           password: formData.password,
@@ -85,12 +87,24 @@ const Register: React.FC = () => {
         <h2 className="text-3xl font-bold text-center mb-6">Crear cuenta</h2>
 
         <form className="space-y-5" onSubmit={handleSubmit}>
-          {/* Nombre completo */}
+          {/* Nombres */}
           <input
             type="text"
-            name="fullName"
+            name="firstName"
             placeholder="Nombre completo"
-            value={formData.fullName}
+            value={formData.firstName}
+            onChange={handleChange}
+            className="w-full px-4 py-3 rounded-lg bg-[#0F172A] border border-gray-600 focus:border-[#22D3EE] focus:ring-2 focus:ring-[#22D3EE] outline-none"
+            required
+          />
+
+        
+          {/* Apellidos */}
+          <input
+            type="text"
+            name="lastName"
+            placeholder="Nombre completo"
+            value={formData.lastName}
             onChange={handleChange}
             className="w-full px-4 py-3 rounded-lg bg-[#0F172A] border border-gray-600 focus:border-[#22D3EE] focus:ring-2 focus:ring-[#22D3EE] outline-none"
             required

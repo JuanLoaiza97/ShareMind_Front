@@ -1,7 +1,32 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, {useState} from "react";
+import { Link, useNavigate } from "react-router-dom";
+
 
 const Login = () => {
+  const [email, setEmail] = useState(""); 
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate(); 
+
+  const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  try {
+    const response = await fetch("http://localhost:4000/users/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+
+    if (!response.ok) throw new Error("Usuario o contraseña incorrectos");
+
+    const data = await response.json(); 
+    localStorage.setItem("user", JSON.stringify(data.user)); 
+    navigate("/ProfileHome"); 
+  } catch (error) {
+    console.error(error);
+    alert("Usuario o contraseña incorrectos");
+  }
+};
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#1E293B]">
       <div className="bg-[#334155] p-10 rounded-2xl shadow-lg w-full max-w-md">
@@ -16,11 +41,13 @@ const Login = () => {
         </h2>
 
         {/* Formulario */}
-        <form className="space-y-5">
+        <form className="space-y-5" onSubmit={handleSubmit}> 
           <div>
             <label className="block text-[#94A3B8] mb-2">Correo electrónico</label>
             <input
               type="email"
+              value={email} 
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="ejemplo@correo.com"
               className="w-full px-4 py-3 rounded-lg bg-[#1E293B] border border-[#475569] text-[#F8FAFC] placeholder-[#94A3B8] focus:outline-none focus:ring-2 focus:ring-[#34D399]"
             />
@@ -29,7 +56,9 @@ const Login = () => {
           <div>
             <label className="block text-[#94A3B8] mb-2">Contraseña</label>
             <input
-              type="password"
+              type="password" 
+              value={password} 
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
               className="w-full px-4 py-3 rounded-lg bg-[#1E293B] border border-[#475569] text-[#F8FAFC] placeholder-[#94A3B8] focus:outline-none focus:ring-2 focus:ring-[#22D3EE]"
             />

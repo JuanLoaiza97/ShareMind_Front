@@ -3,12 +3,31 @@ import { Link } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import Post from "../components/Post";
 import RightSidebar from "../components/RightSidebar";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 
 export default function ProfileHome() {
+
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    } else {
+      navigate("/login"); 
+    }
+  }, [navigate]);
+
+
   return (
     <div className="flex bg-gray-900 min-h-screen">
       {/* Sidebar */}
       <Sidebar />
+
+    <div className="ml-80 flex-1 flex">
 
       {/* Muro */}
     <div className="flex-1 max-w-[962px] p-8">
@@ -42,6 +61,7 @@ export default function ProfileHome() {
 
       {/* Right Sidebar */}
       <RightSidebar />
+    </div>
     </div>
   );
 }
