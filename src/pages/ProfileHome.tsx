@@ -31,13 +31,6 @@ export default function ProfileHome() {
 
       {/* Muro */}
     <div className="flex-1 max-w-[962px] p-8">
-        {/* Botón Realizar Post */}
-        <Link
-          to="/newpost"
-          className="block w-full text-center py-3 mb-6 rounded-lg bg-[#34D399] text-[#1E293B] font-semibold hover:bg-[#22D3EE] transition-colors text-lg shadow-md"
-        >
-          Realizar Post
-        </Link>
 
         <h2 className="text-2xl font-bold text-white mb-6">Muro</h2>
 
@@ -57,6 +50,14 @@ export default function ProfileHome() {
           description="Hoy aprendí algo nuevo sobre NestJS y MongoDB 😍."
           time="Hace 5h"
         />
+
+        {/* Botón Realizar Post */}
+        <Link
+          to="/newpost"
+          className="block w-full text-center py-3 mb-6 rounded-lg bg-[#34D399] text-[#1E293B] font-semibold hover:bg-[#22D3EE] transition-colors text-lg shadow-md"
+        >
+          Realizar Post
+        </Link>
       </div>
 
       {/* Right Sidebar */}

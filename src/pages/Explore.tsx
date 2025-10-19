@@ -78,10 +78,13 @@ const Explore = () => {
       likes: 234
     },
   ];
-
-  return (
-    <div className="min-h-screen bg-[#1E293B] text-white">
-      <div className="max-w-7xl mx-auto p-6">
+return (
+  <div className="flex min-h-screen">
+    {/* Sidebar */}
+    <Sidebar />
+    
+      <div className="ml-60 flex-2 bg-gradient-to-b from-[#0F172A] via-[#1E293B] to-[#0F172A] min-h-screen">
+      <div className="max-w-7xl mx-auto p-10">
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-[#34D399] mb-2">Explorar</h1>
@@ -103,7 +106,7 @@ const Explore = () => {
           <div className="lg:col-span-3 space-y-10">
             {/* Comunidades Destacadas */}
             <section>
-              <h2 className="text-2xl font-bold mb-6 flex items-center gap-3">
+              <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
                 <UserGroupIcon className="h-7 w-7 text-[#34D399]" />
                 Comunidades Destacadas
               </h2>
@@ -150,7 +153,7 @@ const Explore = () => {
 
             {/* Posts Recomendados */}
             <section>
-              <h2 className="text-2xl font-bold mb-6 flex items-center gap-3">
+              <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
                 <SparklesIcon className="h-7 w-7 text-[#34D399]" />
                 Posts Recomendados
               </h2>
@@ -160,7 +163,7 @@ const Explore = () => {
                     key={post.id}
                     className="bg-[#0F172A] p-6 rounded-2xl border border-[#334155] hover:border-[#34D399]/50 transition-all duration-300 cursor-pointer group"
                   >
-                    <h3 className="font-bold text-xl mb-3 group-hover:text-[#34D399] transition">
+                    <h3 className="font-bold text-xl text-white mb-3 group-hover:text-[#34D399] transition">
                       {post.title}
                     </h3>
                     <p className="text-sm text-[#94A3B8] mb-4 leading-relaxed">
@@ -179,7 +182,7 @@ const Explore = () => {
           {/* Sidebar - Tendencias */}
           <div className="lg:col-span-1">
             <div className="bg-[#0F172A] rounded-2xl p-6 border border-[#334155] sticky top-6">
-              <h2 className="text-xl font-bold mb-5 flex items-center gap-2">
+              <h2 className="text-xl font-bold mb-5 text-white flex items-center gap-2">
                 <FireIcon className="h-6 w-6 text-[#F87171]" />
                 Tendencias
               </h2>
@@ -201,7 +204,8 @@ const Explore = () => {
         </div>
       </div>
     </div>
-  );
+  </div>
+);
 };
 
 export default Explore;

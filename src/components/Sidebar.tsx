@@ -25,7 +25,7 @@ const Sidebar: React.FC = () => {
       {/* Menú principal */}
       <nav className="flex-1 px-4 py-6 space-y-3">
         <Link
-          to="/profile"
+          to="/ProfileHome"
           className="flex items-center gap-3 p-3 rounded-lg hover:bg-[#0F172A] transition-colors"
         >
           <HomeIcon className="h-6 w-6 text-[#22D3EE]" />

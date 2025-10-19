@@ -71,7 +71,7 @@ const Profile = () => {
       </div>
 
       {/* Contenedor principal */}
-      <div className="max-w-7xl mx-auto px-6 -mt-20 relative z-10">
+      <div className="max-w-7xl mx-auto px-12 -mt-20 relative z-10">
         {/* Header del perfil */}
         <div className="flex flex-col md:flex-row gap-8 items-start mb-8">
           {/* Avatar */}
