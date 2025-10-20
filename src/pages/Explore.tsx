@@ -4,6 +4,7 @@ import Sidebar from "../components/Sidebar";
 import RightSidebar from "../components/RightSidebar";
 import Post from "../components/Post";
 
+
 export default function Explore() {
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("Todos");

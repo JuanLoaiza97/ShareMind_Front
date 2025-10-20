@@ -1,47 +1,78 @@
 // pages/ProfileHome.tsx
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useAuth } from "../context/AuthContext";
 import Sidebar from "../components/Sidebar";
 import Post from "../components/Post";
 import RightSidebar from "../components/RightSidebar";
+import { Link } from "react-router-dom";
 
 export default function ProfileHome() {
-  return (
-    <div className="flex bg-gray-900 min-h-screen">
-      {/* Sidebar */}
-      <Sidebar />
+  const { user } = useAuth();
+  const [posts, setPosts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-      {/* Muro */}
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const res = await fetch("http://localhost:4000/posts");
+        if (!res.ok) throw new Error("Error al obtener los posts");
+        const data = await res.json();
+        setPosts(data);
+      } catch (error) {
+        console.error("❌ Error cargando posts:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPosts();
+  }, []);
+
+  return (
+    <div className="flex bg-gray-900 min-h-screen text-white">
+      {/* Sidebar izquierdo */}
+      <div className="sticky top-0 h-screen overflow-y-auto">
+        <Sidebar />
+      </div>
+
+      {/* Contenido principal */}
       <div className="flex-1 p-8">
-        {/* Botón Realizar Post */}
+        <h2 className="text-2xl font-bold mb-6">
+          Bienvenido,{" "}
+          {user ? `${user.firstName} ${user.lastName}` : "Usuario"}
+        </h2>
+
+        {/* Botón crear post */}
         <Link
           to="/newpost"
           className="block w-full text-center py-3 mb-6 rounded-lg bg-[#34D399] text-[#1E293B] font-semibold hover:bg-[#22D3EE] transition-colors text-lg shadow-md"
         >
-          Realizar Post
+          ✍️ Realizar Post
         </Link>
 
-        <h2 className="text-2xl font-bold text-white mb-6">Muro</h2>
+        {/* Encabezado de publicaciones */}
+        <h3 className="text-xl text-gray-200 mb-4">
+          Últimas publicaciones
+        </h3>
 
-        {/* Publicaciones */}
-        <Post
-          user="Juan Esteban"
-          userImg="https://i.pravatar.cc/150?img=3"
-          articleImg="https://source.unsplash.com/random/800x400?tech"
-          description="¡Bienvenido a ShareMind 🚀! Este es mi primer post con imagen."
-          time="Hace 2h"
-        />
-
-        <Post
-          user="María Gómez"
-          userImg="https://i.pravatar.cc/150?img=5"
-          articleImg="https://source.unsplash.com/random/800x400?code"
-          description="Hoy aprendí algo nuevo sobre NestJS y MongoDB 😍."
-          time="Hace 5h"
-        />
+        {/* Estado de carga */}
+        {loading ? (
+          <p className="text-gray-400">Cargando publicaciones...</p>
+        ) : posts.length === 0 ? (
+          <p className="text-gray-500">Aún no hay publicaciones disponibles.</p>
+        ) : (
+          <div className="space-y-6">
+            {posts.map((post) => (
+              <Post key={post._id} post={post} />
+            ))}
+          </div>
+        )}
       </div>
 
-      {/* Right Sidebar */}
-      <RightSidebar />
+      {/* Sidebar derecho */}
+      <div className="sticky top-0 h-screen overflow-y-auto">
+        <RightSidebar />
+      </div>
     </div>
   );
 }
