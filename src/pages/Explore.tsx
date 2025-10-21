@@ -16,7 +16,7 @@ const Explore = () => {
       name: "Programadores",
       members: "10.5k",
       description: "Comunidad de desarrollo y código",
-      image: "https://source.unsplash.com/200x200/?programming,code",
+      image: "img/coder.jfif",
       category: "Tecnología"
     },
     {
@@ -24,15 +24,15 @@ const Explore = () => {
       name: "Diseño UX/UI",
       members: "7.2k",
       description: "Diseñadores y creativos visuales",
-      image: "https://source.unsplash.com/200x200/?design,ui",
+      image: "img/UiDesign.jfif",
       category: "Diseño"
     },
     {
       id: 3,
-      name: "Psicología",
+      name: "Psicología para todos",
       members: "5.8k",
       description: "Aprendizaje y salud mental",
-      image: "https://source.unsplash.com/200x200/?psychology,brain",
+      image: "img/descarga (31).jfif",
       category: "Educación"
     },
     {
@@ -40,7 +40,7 @@ const Explore = () => {
       name: "Arte Digital",
       members: "9.1k",
       description: "Ilustración y arte conceptual",
-      image: "https://source.unsplash.com/200x200/?digital,art",
+      image: "img/descarga (32).jfif",
       category: "Arte"
     },
     {
@@ -48,7 +48,7 @@ const Explore = () => {
       name: "Emprendedores",
       members: "12.3k",
       description: "Startups y negocios digitales",
-      image: "https://source.unsplash.com/200x200/?startup,business",
+      image: "img/emprender.jfif",
       category: "Negocios"
     },
     {
@@ -56,7 +56,7 @@ const Explore = () => {
       name: "Data Science",
       members: "8.7k",
       description: "IA, ML y análisis de datos",
-      image: "https://source.unsplash.com/200x200/?data,analytics",
+      image: "img/data_science.jfif",
       category: "Tecnología"
     }
   ];
@@ -83,8 +83,8 @@ return (
     {/* Sidebar */}
     <Sidebar />
     
-      <div className="ml-60 flex-2 bg-gradient-to-b from-[#0F172A] via-[#1E293B] to-[#0F172A] min-h-screen">
-      <div className="max-w-7xl mx-auto p-10">
+    <div className="ml-60 w-full bg-gradient-to-b from-[#0F172A] via-[#1E293B] to-[#0F172A] min-h-screen">
+      <div className="max-w-7xl mx-auto p-12">
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-[#34D399] mb-2">Explorar</h1>
@@ -92,7 +92,7 @@ return (
         </div>
 
         {/* Barra de búsqueda */}
-        <div className="flex items-center bg-[#0F172A] border border-[#334155] rounded-xl p-4 mb-10 hover:border-[#34D399]/50 transition-all duration-300">
+        <div className="flex items-center bg-[#090f1d] border border-[#334155] rounded-xl p-4 mb-10 hover:border-[#34D399]/50 transition-all duration-300">
           <MagnifyingGlassIcon className="h-6 w-6 text-[#34D399]" />
           <input
             type="text"
@@ -114,14 +114,14 @@ return (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 {communities.map((community) => (
                   <Link to="/community" key={community.id}>
-                    <div className="bg-[#0F172A] rounded-2xl overflow-hidden border border-[#334155] hover:border-[#34D399]/50 transition-all duration-300 cursor-pointer group">
-                      <div className="relative h-36 overflow-hidden">
+                    <div className="bg-[#0F172A] rounded-2xl overflow-hidden border border-[#334155] hover:border-[#34D399]50 transition-all duration-300 cursor-pointer group">
+                      <div className="relative h-38 overflow-hidden">
                         <img
                           src={community.image}
                           alt={community.name}
                           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#0F172A] via-[#0F172A]/50 to-transparent"></div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#0F172A] via-[#0F172A]/5 to-transparent"></div>
                         <span className="absolute top-3 right-3 px-3 py-1 bg-[#334155]/90 rounded-full text-xs font-medium backdrop-blur-sm">
                           {community.category}
                         </span>
@@ -153,7 +153,7 @@ return (
 
             {/* Posts Recomendados */}
             <section>
-              <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+              <h2 className="text-2xl text-white font-bold mb-6 flex items-center gap-3">
                 <SparklesIcon className="h-7 w-7 text-[#34D399]" />
                 Posts Recomendados
               </h2>
@@ -182,7 +182,7 @@ return (
           {/* Sidebar - Tendencias */}
           <div className="lg:col-span-1">
             <div className="bg-[#0F172A] rounded-2xl p-6 border border-[#334155] sticky top-6">
-              <h2 className="text-xl font-bold mb-5 text-white flex items-center gap-2">
+              <h2 className="text-xl font-bold text-white mb-5 flex items-center gap-2">
                 <FireIcon className="h-6 w-6 text-[#F87171]" />
                 Tendencias
               </h2>

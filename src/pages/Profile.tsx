@@ -14,11 +14,7 @@ const boards = [
     title: "Plantillas de organización",
     img: "https://source.unsplash.com/400x300/?planner,notes",
   },
-  {
-    id: 3,
-    title: "Psicología educativa",
-    img: "https://source.unsplash.com/400x300/?psychology,brain",
-  },
+
   {
     id: 4,
     title: "Arte digital",
