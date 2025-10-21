@@ -5,9 +5,27 @@ import Sidebar from "../components/Sidebar";
 import Post from "../components/Post";
 import RightSidebar from "../components/RightSidebar";
 
+// 🔹 Definimos el tipo del Post, igual que en Explore/ProfileHome
+interface PostType {
+  _id: string;
+  title: string;
+  shortDescription: string;
+  content: string;
+  image?: string;
+  multimedia?: string;
+  file?: string;
+  author?: {
+    _id?: string;
+    name?: string;
+    email?: string;
+    avatar?: string;
+  };
+  createdAt?: string;
+}
+
 export default function MyProfile() {
   const { user } = useAuth();
-  const [myPosts, setMyPosts] = useState<any[]>([]);
+  const [myPosts, setMyPosts] = useState<PostType[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -15,15 +33,12 @@ export default function MyProfile() {
       if (!user?._id) return; // esperar a que haya usuario autenticado
 
       try {
-        const res = await fetch("http://localhost:4000/posts");
-        if (!res.ok) throw new Error("Error al obtener publicaciones");
-        const data = await res.json();
+        // ✅ Usamos el endpoint específico del backend para el perfil
+        const res = await fetch(`http://localhost:4000/posts/user/${user._id}`);
+        if (!res.ok) throw new Error("Error al obtener tus publicaciones");
 
-        // Filtramos solo los posts del usuario autenticado
-        const userPosts = data.filter(
-          (post: any) => post.author?._id === user._id
-        );
-        setMyPosts(userPosts);
+        const data: PostType[] = await res.json();
+        setMyPosts(data);
       } catch (error) {
         console.error("❌ Error cargando publicaciones del usuario:", error);
       } finally {
@@ -45,17 +60,13 @@ export default function MyProfile() {
       <div className="flex-1 p-8 overflow-y-auto">
         {/* Información del perfil */}
         <div className="flex items-center mb-8">
-          <img
-            src="https://i.pravatar.cc/150?img=10"
-            alt="Foto de perfil"
-            className="w-28 h-28 rounded-full border-4 border-[#34D399] shadow-lg"
-          />
+
           <div className="ml-6">
             <h2 className="text-3xl font-bold">
               {user ? `${user.firstName} ${user.lastName}` : "Cargando..."}
             </h2>
             <p className="text-gray-400 text-lg">
-              {user?.username || "Sin nombre de usuario"}
+              {user?.username || user?.email || "Sin nombre de usuario"}
             </p>
           </div>
         </div>
