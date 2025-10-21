@@ -8,24 +8,26 @@ const Login = () => {
   const navigate = useNavigate(); 
 
   const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-  try {
-    const response = await fetch("http://localhost:4000/users/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:4000/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
 
-    if (!response.ok) throw new Error("Usuario o contraseña incorrectos");
+      if (!response.ok) throw new Error("Usuario o contraseña incorrectos");
 
-    const data = await response.json(); 
-    localStorage.setItem("user", JSON.stringify(data.user)); 
-    navigate("/ProfileHome"); 
-  } catch (error) {
-    console.error(error);
-    alert("Usuario o contraseña incorrectos");
-  }
-};
+      const data = await response.json(); 
+      console.log("Respuesta del servidor:", data);
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user)); 
+      navigate("/ProfileHome"); 
+    } catch (error) {
+      console.error(error);
+      alert("Usuario o contraseña incorrectos");
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#1E293B]">
