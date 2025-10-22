@@ -14,7 +14,11 @@ const boards = [
     title: "Plantillas de organización",
     img: "https://source.unsplash.com/400x300/?planner,notes",
   },
-
+  {
+    id: 3,
+    title: "Psicología educativa",
+    img: "https://source.unsplash.com/400x300/?psychology,brain",
+  },
   {
     id: 4,
     title: "Arte digital",
@@ -52,11 +56,9 @@ const Profile = () => {
 
 
   return (
-    <div className="flex min-h-screen">
-      {/* Sidebar */}
+    <div className="flex h-screen overflow-hidden">      {/* Sidebar */}
       <Sidebar />
-      <div className="ml-60 w-full bg-gradient-to-b from-[#0A0F1E] via-[#1E293B] to-[#0F172A] min-h-screen">
-      {/* Banner con overlay */}
+      <div className="flex-1 bg-gradient-to-b from-[#0A0F1E] via-[#1E293B] to-[#0F172A] overflow-y-auto">      {/* Banner con overlay */}
       <div className="relative h-64 overflow-hidden">
         <img 
           src={user.banner || "/img/banner.jfif"} 
