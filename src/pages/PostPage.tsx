@@ -1,24 +1,57 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from 'react-router-dom'; 
 
-export interface PostProps {
-  post: {
-    _id?: string;
-    title: string;
-    shortDescription: string;
-    content: string;
-    image?: string;
-    multimedia?: string;
-    file?: string;
-    author?: {
-      name?: string;
-      avatar?: string;
-      email?: string;
-    };
-    createdAt?: string;
+export interface PostType { 
+  _id?: string;
+  title: string;
+  shortDescription: string;
+  content: string;
+  image?: string;
+  multimedia?: string;
+  file?: string;
+  author?: {
+    name?: string;
+    avatar?: string;
+    email?: string;
   };
+  createdAt?: string;
 }
 
-export default function Post({ post }: PostProps) {
+export default function PostPage() {
+  const { id } = useParams<{ id: string }>(); 
+  const [postData, setPostData] = useState<PostType | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if (id) {
+      setIsLoading(true);
+      
+      // SIMULACIÓN DE CARGA (Reemplazar con tu lógica real de API/Firestore)
+      setTimeout(() => {
+        const fetchedPost: PostType = {
+          _id: id,
+          title: "Título de la Publicación",
+          shortDescription: "Descripción breve del contenido.",
+          content: "Contenido del post cargado dinámicamente.",
+          author: {
+            name: "Usuario Dinámico",
+            avatar: "https://i.pravatar.cc/150?img=1",
+          },
+          createdAt: new Date().toISOString(),
+          image: "https://placehold.co/800x400/1E293B/34D399?text=Post+ID+"+id,
+        };
+        setPostData(fetchedPost);
+        setIsLoading(false);
+      }, 500); 
+    }
+  }, [id]); 
+
+  if (isLoading || !postData) {
+    return <div className="p-8 text-white bg-[#0F172A] min-h-screen">Cargando post ID: {id}...</div>;
+  }
+  
+  const post = postData; 
+  
   return (
     <div className="bg-[#1E293B] rounded-2xl shadow-md p-6 hover:shadow-xl transition duration-300">
       {/* Encabezado del usuario */}
