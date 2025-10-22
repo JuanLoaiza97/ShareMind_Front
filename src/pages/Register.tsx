@@ -15,17 +15,44 @@ const Register: React.FC = () => {
 
   const [interests, setInterests] = useState<string[]>([]);
   const [languages, setLanguages] = useState<string[]>([]);
+  const [suggestions, setSuggestions] = useState<string[]>([]);
+
   const navigate = useNavigate();
 
-  // Manejar cambios en inputs de texto
+  const cities = [
+    "Medellín, Colombia",
+    "Bogotá, Colombia",
+    "Cali, Colombia",
+    "Buenos Aires, Argentina",
+    "Ciudad de México, México",
+    "Madrid, España",
+    "Barcelona, España",
+    "París, Francia",
+    "Berlín, Alemania",
+    "Lisboa, Portugal",
+    "Nueva York, USA",
+    "Los Ángeles, USA",
+  ];
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+
+    if (name === "country") {
+      if (value.length > 1) {
+        setSuggestions(
+          cities.filter((city) =>
+            city.toLowerCase().includes(value.toLowerCase())
+          )
+        );
+      } else {
+        setSuggestions([]);
+      }
+    }
   };
 
-  // Manejar selección de intereses
   const handleInterestChange = (interest: string) => {
     setInterests((prev) =>
       prev.includes(interest)
@@ -34,19 +61,23 @@ const Register: React.FC = () => {
     );
   };
 
-  // Manejar selección de idiomas
   const handleLanguageChange = (lang: string) => {
     setLanguages((prev) =>
       prev.includes(lang) ? prev.filter((l) => l !== lang) : [...prev, lang]
     );
   };
 
-  // Enviar datos al backend
+  const handleSelectSuggestion = (city: string) => {
+    setFormData((prev) => ({ ...prev, country: city }));
+    setSuggestions([]);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (formData.password !== formData.confirmPassword) {
-      alert("Las contraseñas no coinciden");
+      // Reemplazado alert por console.error, ya que alert no funciona en iframes
+      console.error("Las contraseñas no coinciden");
       return;
     }
 
@@ -73,11 +104,11 @@ const Register: React.FC = () => {
         throw new Error("Error en el registro");
       }
 
-      alert("Usuario registrado con éxito 🎉");
+      console.log("Usuario registrado con éxito 🎉");
       navigate("/login");
     } catch (error) {
       console.error(error);
-      alert("Hubo un problema al registrar el usuario");
+      console.error("Hubo un problema al registrar el usuario");
     }
   };
 
@@ -87,28 +118,27 @@ const Register: React.FC = () => {
         <h2 className="text-3xl font-bold text-center mb-6">Crear cuenta</h2>
 
         <form className="space-y-5" onSubmit={handleSubmit}>
-          {/* Nombres */}
-          <input
-            type="text"
-            name="firstName"
-            placeholder="Nombre completo"
-            value={formData.firstName}
-            onChange={handleChange}
-            className="w-full px-4 py-3 rounded-lg bg-[#0F172A] border border-gray-600 focus:border-[#22D3EE] focus:ring-2 focus:ring-[#22D3EE] outline-none"
-            required
-          />
-
-        
-          {/* Apellidos */}
-          <input
-            type="text"
-            name="lastName"
-            placeholder="Nombre completo"
-            value={formData.lastName}
-            onChange={handleChange}
-            className="w-full px-4 py-3 rounded-lg bg-[#0F172A] border border-gray-600 focus:border-[#22D3EE] focus:ring-2 focus:ring-[#22D3EE] outline-none"
-            required
-          />
+          {/* Nombres y Apellidos */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <input
+              type="text"
+              name="firstName"
+              placeholder="Nombres"
+              value={formData.firstName}
+              onChange={handleChange}
+              className="w-full px-4 py-3 rounded-lg bg-[#0F172A] border border-gray-600 focus:border-[#22D3EE] focus:ring-2 focus:ring-[#22D3EE] outline-none"
+              required
+            />
+            <input
+              type="text"
+              name="lastName"
+              placeholder="Apellidos"
+              value={formData.lastName}
+              onChange={handleChange}
+              className="w-full px-4 py-3 rounded-lg bg-[#0F172A] border border-gray-600 focus:border-[#22D3EE] focus:ring-2 focus:ring-[#22D3EE] outline-none"
+              required
+            />
+          </div>
 
           {/* Nombre de usuario */}
           <input
@@ -154,40 +184,63 @@ const Register: React.FC = () => {
             />
           </div>
 
-          {/* País */}
-          <input
-            type="text"
-            name="country"
-            placeholder="Ciudad / País"
-            value={formData.country}
-            onChange={handleChange}
-            className="w-full px-4 py-3 rounded-lg bg-[#0F172A] border border-gray-600 focus:border-[#22D3EE] focus:ring-2 focus:ring-[#22D3EE] outline-none"
-            required
-          />
+          {/* Ciudad / País con autocompletar */}
+          <div className="relative">
+            <input
+              type="text"
+              name="country"
+              placeholder="Ciudad / País"
+              value={formData.country}
+              onChange={handleChange}
+              className="w-full px-4 py-3 rounded-lg bg-[#0F172A] border border-gray-600 focus:border-[#22D3EE] focus:ring-2 focus:ring-[#22D3EE] outline-none"
+              required
+            />
+            {suggestions.length > 0 && (
+              <ul className="absolute bg-[#1E293B] border border-gray-600 rounded-lg mt-1 w-full max-h-40 overflow-y-auto z-10">
+                {suggestions.map((city, index) => (
+                  <li
+                    key={index}
+                    onClick={() => handleSelectSuggestion(city)}
+                    className="px-4 py-2 cursor-pointer hover:bg-[#22D3EE] hover:text-[#1E293B]"
+                  >
+                    {city}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
 
           {/* Idiomas */}
           <div>
             <p className="text-sm mb-3 font-medium">Idiomas que hablas:</p>
             <div className="flex flex-wrap gap-3">
-              {["Español", "Inglés", "Francés", "Alemán", "Portugués"].map(
-                (lang) => {
-                  const selected = languages.includes(lang);
-                  return (
-                    <button
-                      type="button"
-                      key={lang}
-                      onClick={() => handleLanguageChange(lang)}
-                      className={`px-4 py-2 rounded-full text-sm font-medium transition-colors shadow-md ${
-                        selected
-                          ? "bg-[#22D3EE] text-[#1E293B]"
-                          : "bg-[#0F172A] text-[#94A3B8] border border-[#334155] hover:bg-[#1E293B] hover:text-[#F8FAFC]"
-                      }`}
-                    >
-                      {lang}
-                    </button>
-                  );
-                }
-              )}
+              {[
+                "Español",
+                "Inglés",
+                "Francés",
+                "Alemán",
+                "Portugués",
+                "Italiano",
+                "Chino",
+                "Japonés",
+                "Coreano",
+              ].map((lang) => {
+                const selected = languages.includes(lang);
+                return (
+                  <button
+                    type="button"
+                    key={lang}
+                    onClick={() => handleLanguageChange(lang)}
+                    className={`px-4 py-2 rounded-full text-sm font-medium transition-colors shadow-md ${
+                      selected
+                        ? "bg-[#22D3EE] text-[#1E293B]"
+                        : "bg-[#0F172A] text-[#94A3B8] border border-[#334155] hover:bg-[#1E293B] hover:text-[#F8FAFC]"
+                    }`}
+                  >
+                    {lang}
+                  </button>
+                );
+              })}
             </div>
           </div>
 
@@ -204,6 +257,10 @@ const Register: React.FC = () => {
                 "Historia",
                 "Idiomas",
                 "Literatura",
+                "Deportes",
+                "Música",
+                "Cine",
+                "Viajes",
               ].map((interest) => {
                 const selected = interests.includes(interest);
                 return (

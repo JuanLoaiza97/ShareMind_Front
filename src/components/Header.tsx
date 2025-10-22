@@ -14,9 +14,9 @@ const Header = () => {
           <Link to="/" className="hover:text-[#34D399] transition-colors">
             Inicio
           </Link>
-          <Link to="/explorar" className="hover:text-[#34D399] transition-colors">
+          {/* <Link to="/explorar" className="hover:text-[#34D399] transition-colors">
             Explorar
-          </Link>
+          </Link> */}
           <Link
             to="/login"
             className="px-4 py-2 rounded-lg bg-[#34D399] text-[#1E293B] font-medium hover:bg-[#22D3EE] transition-colors"

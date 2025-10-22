@@ -25,7 +25,7 @@ const Sidebar: React.FC = () => {
       {/* Menú principal */}
       <nav className="flex-1 px-4 py-6 space-y-3">
         <Link
-          to="/ProfileHome"
+          to="/profilehome"
           className="flex items-center gap-3 p-3 rounded-lg hover:bg-[#0F172A] transition-colors"
         >
           <HomeIcon className="h-6 w-6 text-[#22D3EE]" />
@@ -49,7 +49,7 @@ const Sidebar: React.FC = () => {
         </Link>
 
         <Link
-          to="/messages"
+          to="/mensajes"
           className="flex items-center gap-3 p-3 rounded-lg hover:bg-[#0F172A] transition-colors"
         >
           <ChatBubbleOvalLeftEllipsisIcon className="h-6 w-6 text-[#22D3EE]" />
@@ -68,7 +68,7 @@ const Sidebar: React.FC = () => {
       {/* Menú inferior */}
       <div className="px-4 py-6 space-y-3 border-t border-gray-700">
         <Link
-          to="/my-profile"
+          to="/myprofile"
           className="flex items-center gap-3 p-3 rounded-lg hover:bg-[#0F172A] transition-colors"
         >
           <UserCircleIcon className="h-6 w-6 text-[#22D3EE]" />
@@ -76,7 +76,7 @@ const Sidebar: React.FC = () => {
         </Link>
 
         <Link
-          to="/settings"
+          to="/construccion"
           className="flex items-center gap-3 p-3 rounded-lg hover:bg-[#0F172A] transition-colors"
         >
           <Cog6ToothIcon className="h-6 w-6 text-[#22D3EE]" />
