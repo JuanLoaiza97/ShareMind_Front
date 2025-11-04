@@ -24,7 +24,7 @@ export default function Post({ post }: PostProps) {
   const formattedDate = post.createdAt
     ? new Date(post.createdAt).toLocaleString()
     : "Hace un momento";
-
+  // console.log("🧩 Post renderizado:", post);
   return (
     <Link
       to={`/post/${post._id}`}
