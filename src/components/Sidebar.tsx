@@ -1,15 +1,25 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   HomeIcon,
   GlobeAltIcon,
   ChatBubbleOvalLeftEllipsisIcon,
   BellIcon,
   UserCircleIcon,
-  Cog6ToothIcon,
+  ArrowRightOnRectangleIcon,
 } from "@heroicons/react/24/outline";
 
 const Sidebar: React.FC = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Eliminar token y cualquier dato de sesión
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    // Redirigir al login
+    navigate("/login");
+  };
+
   return (
     <aside className="h-screen w-64 bg-[#1E293B] text-[#F8FAFC] flex flex-col shadow-lg">
       {/* Logo */}
@@ -65,13 +75,14 @@ const Sidebar: React.FC = () => {
           Mi Perfil
         </Link>
 
-        <Link
-          to="/construccion"
-          className="flex items-center gap-3 p-3 rounded-lg hover:bg-[#0F172A] transition-colors"
+        {/* 🔴 Cerrar sesión */}
+        <button
+          onClick={handleLogout}
+          className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-[#0F172A] transition-colors text-left"
         >
-          <Cog6ToothIcon className="h-6 w-6 text-[#22D3EE]" />
-          Configuración
-        </Link>
+          <ArrowRightOnRectangleIcon className="h-6 w-6 text-[#22D3EE]" />
+          Cerrar sesión
+        </button>
       </div>
     </aside>
   );
