@@ -68,7 +68,7 @@ const Sidebar: React.FC = () => {
       {/* Menú inferior */}
       <div className="px-4 py-6 space-y-3 border-t border-gray-700">
         <Link
-          to="/myprofile"
+          to="/profile"
           className="flex items-center gap-3 p-3 rounded-lg hover:bg-[#0F172A] transition-colors"
         >
           <UserCircleIcon className="h-6 w-6 text-[#22D3EE]" />
