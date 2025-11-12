@@ -1,19 +1,28 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   HomeIcon,
   GlobeAltIcon,
-  MagnifyingGlassIcon,
   ChatBubbleOvalLeftEllipsisIcon,
   BellIcon,
+  UserGroupIcon,
   UserCircleIcon,
-  Cog6ToothIcon,
+  ArrowRightOnRectangleIcon,
 } from "@heroicons/react/24/outline";
 
 const Sidebar: React.FC = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Eliminar token y cualquier dato de sesión
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    // Redirigir al login
+    navigate("/login");
+  };
+
   return (
-    
-    <aside className="fixed top-0 left-0 h-screen w-60 bg-[#1E293B] text-[#F8FAFC] flex flex-col shadow-lg">
+    <aside className="h-screen w-64 bg-[#1E293B] text-[#F8FAFC] flex flex-col shadow-lg">
       {/* Logo */}
       <div className="flex items-center justify-center h-20 border-b border-gray-700">
         <h1 className="text-2xl font-bold">
@@ -40,12 +49,12 @@ const Sidebar: React.FC = () => {
           Explorar
         </Link>
 
-        <Link
-          to="/search"
+          <Link
+          to="/communities"
           className="flex items-center gap-3 p-3 rounded-lg hover:bg-[#0F172A] transition-colors"
         >
-          <MagnifyingGlassIcon className="h-6 w-6 text-[#22D3EE]" />
-          Buscar
+          <UserGroupIcon className="h-6 w-6 text-[#22D3EE]" />
+          Communities
         </Link>
 
         <Link
@@ -68,20 +77,21 @@ const Sidebar: React.FC = () => {
       {/* Menú inferior */}
       <div className="px-4 py-6 space-y-3 border-t border-gray-700">
         <Link
-          to="/profile"
+          to="/myprofile"
           className="flex items-center gap-3 p-3 rounded-lg hover:bg-[#0F172A] transition-colors"
         >
           <UserCircleIcon className="h-6 w-6 text-[#22D3EE]" />
           Mi Perfil
         </Link>
 
-        <Link
-          to="/construccion"
-          className="flex items-center gap-3 p-3 rounded-lg hover:bg-[#0F172A] transition-colors"
+        {/* 🔴 Cerrar sesión */}
+        <button
+          onClick={handleLogout}
+          className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-[#0F172A] transition-colors text-left"
         >
-          <Cog6ToothIcon className="h-6 w-6 text-[#22D3EE]" />
-          Configuración
-        </Link>
+          <ArrowRightOnRectangleIcon className="h-6 w-6 text-[#22D3EE]" />
+          Cerrar sesión
+        </button>
       </div>
     </aside>
   );

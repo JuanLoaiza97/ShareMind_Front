@@ -56,11 +56,14 @@ const Profile = () => {
 
 
   return (
-    <div className="flex min-h-screen">
-      {/* Sidebar */}
+    <div className="flex min-h-screen bg-gray-900">
+    {/* Sidebar */}
+    <div className="sticky top-0 h-screen overflow-y-auto">
       <Sidebar />
-      <div className="ml-60 w-full bg-gradient-to-b from-[#0A0F1E] via-[#1E293B] to-[#0F172A] min-h-screen">
-      {/* Banner con overlay */}
+    </div>
+
+<div className="flex-1 bg-gray-900 min-h-screen">
+        {/* Banner con overlay */}
       <div className="relative h-64 overflow-hidden">
         <img 
           src={user.banner || "/img/banner.jfif"} 

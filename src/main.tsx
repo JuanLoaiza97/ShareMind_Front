@@ -11,6 +11,7 @@ import Profile from "./pages/Profile";
 import PostPage from "./pages/PostPage";
 import NewPost from "./pages/NewPost"; 
 import Explore from "./pages/Explore"; 
+import Communities from "./pages/Communities"; 
 import Community from "./pages/Community"; 
 import EnConstruccion from "./pages/construccion";
 import Notifications from "./pages/Notifications";
@@ -18,6 +19,7 @@ import MessagesProfile from "./pages/MessagesProfile";
 import Chat from "./pages/Chat";
 import MyProfile from "./pages/MyProfile";
 import { AuthProvider } from "./context/AuthContext"; 
+
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -36,12 +38,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <Route path="/post/:id" element={<PostPage />} /> 
           <Route path="/newpost" element={<NewPost />} />
           <Route path="/explore" element={<Explore />} />
-          <Route path="/community" element={<Community />} /> 
+          <Route path="/communities" element={<Communities />} />
 
-          <Route path="/notifications" element={<Notifications />} />
-          <Route path="/mensajes" element={<MessagesProfile />} />
-          <Route path="/chat/:id" element={<Chat />} />
-          <Route path="/construccion" element={<EnConstruccion />} />
+
 
         </Routes>
       </AuthProvider>

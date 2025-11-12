@@ -9,7 +9,7 @@ import {
   UsersIcon,
 } from "@heroicons/react/24/outline";
 
-const Explore = () => {
+const Communities = () => {
   const communities = [
     {
       id: 1,
@@ -79,15 +79,17 @@ const Explore = () => {
     },
   ];
 return (
-  <div className="flex min-h-screen">
+  <div className="flex min-h-screen bg-gray-900">
     {/* Sidebar */}
-    <Sidebar />
-    
-    <div className="ml-60 w-full bg-gradient-to-b from-[#0F172A] via-[#1E293B] to-[#0F172A] min-h-screen">
-      <div className="max-w-7xl mx-auto p-12">
+    <div className="sticky top-0 h-screen overflow-y-auto">
+      <Sidebar />
+    </div>
+
+<div className="flex-1 bg-gray-900 min-h-screen">  
+   <div className="max-w-7xl mx-auto p-12">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-[#34D399] mb-2">Explorar</h1>
+          <h1 className="text-3xl font-bold text-[#34D399] mb-2">Comunidades</h1>
           <p className="text-[#94A3B8]">Descubre comunidades y contenido que te inspire</p>
         </div>
 
@@ -208,4 +210,4 @@ return (
 );
 };
 
-export default Explore;
+export default Communities;

@@ -77,6 +77,7 @@ interface User {
   languages?: string[];
   interests?: string[];
   bio?: string;
+  badges?: string[];
 }
 
 interface AuthContextType {

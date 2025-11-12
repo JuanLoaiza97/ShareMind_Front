@@ -1,93 +1,76 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+// pages/ProfileHome.tsx
+import { useEffect, useState } from "react";
+import { useAuth } from "../context/AuthContext";
 import Sidebar from "../components/Sidebar";
 import Post from "../components/Post";
 import RightSidebar from "../components/RightSidebar";
-
-// Definición de la interfaz para el post que se espera del backend
-interface PostType {
-  _id: string;
-  title: string;
-  shortDescription: string;
-  content: string;
-  image?: string;
-  multimedia?: string;
-  file?: string;
-  author?: {
-    name?: string;
-    email?: string;
-    avatar?: string;
-  };
-  createdAt?: string;
-}
+import { Link } from "react-router-dom";
 
 export default function ProfileHome() {
-  const [user, setUser] = useState(null);
-  const [posts, setPosts] = useState<PostType[]>([]);
+  const { user } = useAuth();
+  const [posts, setPosts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
-
-  const fetchPosts = async () => {
-    setLoading(true);
-    try {
-      const response = await fetch("http://localhost:4000/posts");
-      if (!response.ok) throw new Error("Fallo al cargar los posts.");
-      
-      const data: PostType[] = await response.json();
-      setPosts(data);
-    } catch (error) {
-      console.error("Error cargando posts:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-      fetchPosts();
-    } else {
-      navigate("/login");
-    }
-  }, [navigate]);
+    const fetchPosts = async () => {
+      try {
+        const res = await fetch("http://localhost:4000/posts");
+        if (!res.ok) throw new Error("Error al obtener los posts");
+        const data = await res.json();
+        setPosts(data);
+      } catch (error) {
+        console.error("❌ Error cargando posts:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPosts();
+  }, []);
 
   return (
-    <div className="flex bg-gray-900 min-h-screen">
-      <Sidebar />
+    <div className="flex bg-gray-900 min-h-screen text-white">
+      {/* Sidebar izquierdo */}
+      <div className="sticky top-0 h-screen overflow-y-auto">
+        <Sidebar />
+      </div>
 
-      <div className="ml-63 flex-1 flex">
-        {/* Muro */}
-        <div className="flex-1 max-w-[962px] p-10">
-          <h2 className="text-2xl font-bold text-white mb-6">Muro</h2>
+      {/* Contenido principal */}
+      <div className="flex-1 p-8">
+        <h2 className="text-2xl font-bold mb-6">
+          Bienvenido,{" "}
+          {user ? `${user.firstName} ${user.lastName}` : "Usuario"}
+        </h2>
 
-          {/* Botón Realizar Post */}
-          <Link
-            to="/newpost"
-            className="block w-full text-center py-3 mb-6 rounded-lg bg-[#34D399] text-[#1E293B] font-semibold hover:bg-[#22D3EE] transition-colors text-lg shadow-md"
-          >
-            Realizar Post
-          </Link>
+        {/* Botón crear post */}
+        <Link
+          to="/newpost"
+          className="block w-full text-center py-3 mb-6 rounded-lg bg-[#34D399] text-[#1E293B] font-semibold hover:bg-[#22D3EE] transition-colors text-lg shadow-md"
+        >
+          ✍️ Realizar Post
+        </Link>
 
-          {/* Publicaciones Dinámicas */}
-          {loading ? (
-            <p className="text-gray-400">Cargando publicaciones...</p>
-          ) : posts.length === 0 ? (
-            <p className="text-gray-400">No hay publicaciones disponibles en el muro.</p>
-          ) : (
-            <div className="space-y-6">
-              {posts.map((post) => (
-                <Post 
-                  key={post._id} 
-                  post={post}
-                />
-              ))}
-            </div>
-          )}
+        {/* Encabezado de publicaciones */}
+        <h3 className="text-xl text-gray-200 mb-4">
+          Últimas publicaciones
+        </h3>
 
-        </div>
+        {/* Estado de carga */}
+        {loading ? (
+          <p className="text-gray-400">Cargando publicaciones...</p>
+        ) : posts.length === 0 ? (
+          <p className="text-gray-500">Aún no hay publicaciones disponibles.</p>
+        ) : (
+          <div className="space-y-6">
+            {posts.map((post) => (
+              <Post key={post._id} post={post} />
+            ))}
+          </div>
+        )}
+      </div>
 
-        {/* Right Sidebar */}
+      {/* Sidebar derecho */}
+      <div className="sticky top-0 h-screen overflow-y-auto">
         <RightSidebar />
       </div>
     </div>
